@@ -1,6 +1,6 @@
 -- Handle GitLab merge requests
 module MergeRequest where
-    -- export only interesting things
+    -- TODO: export only what we want
 
 -- extracted data of a merge request URI
 data MergeRequest = MergeRequest {
