@@ -2,10 +2,11 @@
 module MergeRequest where
     -- export only interesting things
 
+-- extracted data of a merge request URI
 data MergeRequest = MergeRequest {
-    mergeRequestId      :: Int,
-    mergeRequestBaseURL :: String,
-    mergeRequestProject :: String
+    mergeRequestId      :: Int, -- its ID, e.g. 18835
+    mergeRequestBaseURL :: String, -- its base URL, e.g. "https://git.something.com/"
+    mergeRequestProject :: String -- the concerned project, e.g. "myproject/subproject"
 } deriving (Show)
 
 -- merge request typical examples :
@@ -16,8 +17,10 @@ mr2 = MergeRequest 1993 "https://git.kwankodev.net/" "kwanko/kwanko-api-backend"
 -- https://git.kwankodev.net/addons/api-fronto/merge_requests/1580
 mr3 = MergeRequest 1580 "https://git.kwankodev.net/" "addons/api-fronto"
 
+-- parse a merge request URI
 parseMergeRequest :: String -> Maybe MergeRequest
 parseMergeRequest = undefined
 
+-- print a merge request
 printMergeRequest :: MergeRequest -> String
 printMergeRequest (MergeRequest id base project) = base ++ project ++ "/merge_requests/" ++ show id
