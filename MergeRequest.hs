@@ -1,6 +1,10 @@
 -- Handle GitLab merge requests
-module MergeRequest where
-    -- TODO: export only what we want
+module MergeRequest (
+    parseMergeRequest,
+    printMergeRequest
+) where
+
+import Text.Regex.PCRE ((=~))
 
 -- extracted data of a merge request URI
 data MergeRequest = MergeRequest {
@@ -33,7 +37,11 @@ mr3 = MergeRequest 1580 "https://git.something.com/" "project/api-front"
 
 -- parse a merge request URI
 parseMergeRequest :: String -> Maybe MergeRequest 
-parseMergeRequest = undefined -- TODO: regex?
+parseMergeRequest s =
+    case matched of
+        (_, _, _, base:project:id:_) -> Just (MergeRequest (read id) base project)
+        _                            -> Nothing
+    where matched = s =~ "(https?://[\\w.]*)/([\\w-]*/[\\w-]*)/merge_requests/(\\d*)" :: (String, String, String, [String])
 
 -- print a merge request
 printMergeRequest :: MergeRequest -> String
