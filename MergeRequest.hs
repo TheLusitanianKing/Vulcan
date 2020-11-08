@@ -13,14 +13,14 @@ data MergeRequest = MergeRequest {
     mergeRequestProject :: String -- the concerned project, e.g. "myproject/subproject"
 } deriving (Show, Eq)
 
--- TODO: move this stuff?
+-- TODO: needed? move this stuff?
 data Commit = Commit {
     commitHash   :: String,
     commitName   :: String,
     commitAuthor :: String
 } deriving (Show, Eq)
 
--- TODO: do I really want these data type?
+-- TODO: do I really want this data type?
 data MergeRequestData = MergeRequestData {
     mergeRequestTargetBranch :: String,
     mergeRequestSourceBranch :: String
