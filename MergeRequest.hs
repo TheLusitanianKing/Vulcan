@@ -41,7 +41,7 @@ parseMergeRequest s =
     case matched of
         (_, _, _, base:project:id:_) -> Just (MergeRequest (read id) base project)
         _                            -> Nothing
-    where matched = s =~ "(https?://[\\w.]*)/([\\w-]*/[\\w-]*)/merge_requests/(\\d*)" :: (String, String, String, [String])
+    where matched = s =~ "(https?://[\\w.]*)/([\\w-]*/[\\w-]*)/merge_requests/(\\d+)" :: (String, String, String, [String])
 
 -- print a merge request
 printMergeRequest :: MergeRequest -> String
