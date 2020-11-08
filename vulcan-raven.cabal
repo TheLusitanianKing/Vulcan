@@ -1,0 +1,14 @@
+Name:          vulcan-raven
+Version:       0.1
+Synopsis:      Merge request validation helper
+Description:
+  A support assistant for automatic Git actions and guidelines.
+  Mainly for giving merge request validation help.
+  TO COMPLETE
+Author:        The Lusitanian King
+Maintainer:    aguiaiberica@gmail.com
+Cabal-Version: >= 1.2
+library
+  Exposed-Modules: MergeRequest
+  Build-Depends:   base >= 2.0
+                   regex-pcre >= 0.95
