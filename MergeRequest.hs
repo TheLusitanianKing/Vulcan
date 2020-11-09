@@ -9,7 +9,7 @@ import Text.Regex.PCRE ((=~))
 -- extracted data of a merge request URI
 data MergeRequest = MergeRequest {
     mergeRequestId      :: Int, -- its ID, e.g. 18835
-    mergeRequestBaseURL :: String, -- its base URL, e.g. "https://git.something.com/"
+    mergeRequestBaseURL :: String, -- its base URL, e.g. "https://git.something.com"
     mergeRequestProject :: String -- the concerned project, e.g. "myproject/subproject"
 } deriving (Show, Eq)
 
@@ -45,7 +45,7 @@ parseMergeRequest s =
 
 -- print a merge request
 printMergeRequest :: MergeRequest -> String
-printMergeRequest (MergeRequest id base project) = base ++ project ++ "/merge_requests/" ++ show id
+printMergeRequest (MergeRequest id base project) = base ++ "/" ++ project ++ "/merge_requests/" ++ show id
 
 -- TODO: retrieve commit list from a merge request
 mergeRequestCommits :: MergeRequest -> [Commit]
