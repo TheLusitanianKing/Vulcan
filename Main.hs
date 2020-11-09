@@ -8,13 +8,13 @@ main = getArgs >>=
     (\args ->
         case args of
             [] -> putStrLn "Give me a merge request you little punk"
-            _  -> putStrLn . action . head $ args
+            _  -> putStrLn . unlines . map action $ args
     )
 
     
 action :: String -> String
 action m =
     case parsed of
-        Nothing -> "This isn't a merge request punk!"
+        Nothing -> m ++ " isn't a merge request punk!"
         Just x  -> "Ok, this is a valid merge request: " ++ printMergeRequest x
     where parsed = parseMergeRequest m
