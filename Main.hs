@@ -1,9 +1,11 @@
 module Main where
 
+import System.Environment (getArgs)
 import MergeRequest (parseMergeRequest, printMergeRequest)
 
 main :: IO ()
-main = interact $ action
+main = getArgs >>= (\args -> putStrLn . action . head $ args)
+
     
 action :: String -> String
 action m =
