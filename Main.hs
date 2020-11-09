@@ -4,7 +4,11 @@ import System.Environment (getArgs)
 import MergeRequest (parseMergeRequest, printMergeRequest)
 
 main :: IO ()
-main = getArgs >>= (\args -> putStrLn . action . head $ args)
+main = getArgs >>= (\args ->
+    case args of
+        [] -> putStrLn "Please give a merge request.."
+        _  -> putStrLn . action . head $ args
+    )
 
     
 action :: String -> String
