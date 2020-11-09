@@ -2,7 +2,7 @@
 Our assistant for GitLab merge requests
 
 ## Who is Vulcan Raven?
-Vulcan Raven (バルカン・レイブン - Barukan Reibun) is our support assistant for automatic Git actions and guidelines.
+Vulcan Raven is our support assistant for automatic Git actions and guidelines.
 
 ## What can he do?
 From a GitLab merge request URI, he can :
