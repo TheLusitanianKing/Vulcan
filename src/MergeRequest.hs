@@ -5,6 +5,7 @@ module MergeRequest (
 ) where
 
 import Text.Regex.PCRE ((=~))
+import Network.HTTP.Client
 
 -- extracted data of a merge request URI
 data MergeRequest = MergeRequest {
