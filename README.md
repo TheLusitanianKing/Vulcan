@@ -41,7 +41,7 @@ The merge request needs manual validation.
 ```
 
 ## Progress
-Work in progress... 1%
+Work in progress... 5%
 
 ## Disclaimer
 TODO
