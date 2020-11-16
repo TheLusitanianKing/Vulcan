@@ -1,11 +1,11 @@
 -- Handle GitLab merge requests
-module MergeRequest (
-    parseMergeRequest,
-    printMergeRequest
-) where
+module MergeRequest where
+    -- TODO: import only wanted functions
 
 import Text.Regex.PCRE ((=~))
-import Network.HTTP.Client
+import Network.HTTP.Simple
+import Data.Aeson (Value)
+import qualified Data.ByteString.Char8 as C8
 
 -- extracted data of a merge request URI
 data MergeRequest = MergeRequest {
@@ -49,8 +49,20 @@ printMergeRequest :: MergeRequest -> String
 printMergeRequest (MergeRequest id base project) = base ++ "/" ++ project ++ "/merge_requests/" ++ show id
 
 -- TODO: retrieve commit list from a merge request
-mergeRequestCommits :: MergeRequest -> [Commit]
-mergeRequestCommits = undefined
+-- mergeRequestCommits :: MergeRequest -> IO [Commit]
+mergeRequestCommits :: MergeRequest -> IO ()
+mergeRequestCommits m = do
+    let request
+            = setRequestPath (C8.pack "/projects")
+            $ setRequestHost (C8.pack "https://gitlab.com/api/v4/")
+            $ setRequestQueryString [(C8.pack "membership", Just (C8.pack "true"))]
+            $ setRequestMethod (C8.pack "GET")
+            $ setRequestSecure True
+            $ setRequestPort 80
+            $ defaultRequest
+    response <- httpJSON request
+    C8.putStrLn . C8.pack $ "The response was: " ++ show (getResponseBody response :: Value)
+    C8.putStrLn . C8.pack $ "The status code was: " ++ show (getResponseStatusCode response)
 
 -- TODO: retrieve last X commits of a project by its project name
 projectCommitsByProjectName :: String -> Int -> [Commit]
