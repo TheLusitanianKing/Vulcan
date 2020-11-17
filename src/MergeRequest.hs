@@ -6,6 +6,7 @@ import Text.Regex.PCRE ((=~))
 import Network.HTTP.Simple
 import Data.Aeson (Value)
 import qualified Data.ByteString.Char8 as C8
+import qualified Data.CaseInsensitive as CI
 
 -- extracted data of a merge request URI
 data MergeRequest = MergeRequest {
@@ -52,17 +53,21 @@ printMergeRequest (MergeRequest id base project) = base ++ "/" ++ project ++ "/m
 -- mergeRequestCommits :: MergeRequest -> IO [Commit]
 mergeRequestCommits :: MergeRequest -> IO ()
 mergeRequestCommits m = do
-    let request
-            = setRequestPath (C8.pack "/projects")
+    response <- httpJSON $ prepareGitLabRequest "/projects"
+    C8.putStrLn . C8.pack $ "The response was: " ++ show (getResponseBody response :: Value)
+    C8.putStrLn . C8.pack $ "The status code was: " ++ show (getResponseStatusCode response)
+
+prepareGitLabRequest :: String -> Request
+prepareGitLabRequest path =
+            setRequestPath (C8.pack path)
             $ setRequestHost (C8.pack "https://gitlab.com/api/v4/")
+            -- TODO: put authorization bearer into configuration file + revoke it as it has been disclosed
+            $ setRequestHeaders [(CI.mk (C8.pack "Authorization"), C8.pack "Bearer ELLAJvrdz2H3YoMzcPvm")] 
             $ setRequestQueryString [(C8.pack "membership", Just (C8.pack "true"))]
             $ setRequestMethod (C8.pack "GET")
             $ setRequestSecure True
             $ setRequestPort 80
             $ defaultRequest
-    response <- httpJSON request
-    C8.putStrLn . C8.pack $ "The response was: " ++ show (getResponseBody response :: Value)
-    C8.putStrLn . C8.pack $ "The status code was: " ++ show (getResponseStatusCode response)
 
 -- TODO: retrieve last X commits of a project by its project name
 projectCommitsByProjectName :: String -> Int -> [Commit]
