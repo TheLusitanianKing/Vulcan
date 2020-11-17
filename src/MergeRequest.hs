@@ -13,21 +13,21 @@ data MergeRequest = MergeRequest {
     mergeRequestId      :: Int, -- its ID, e.g. 18835
     mergeRequestBaseURL :: String, -- its base URL, e.g. "https://git.something.com"
     mergeRequestProject :: String -- the concerned project, e.g. "myproject/subproject"
-} deriving (Show, Eq)
+} deriving (Eq, Show)
 
 -- TODO: needed? move this stuff?
 data Commit = Commit {
     commitHash   :: String,
     commitName   :: String,
     commitAuthor :: String
-} deriving (Show, Eq)
+} deriving (Eq, Show)
 
 -- TODO: do I really want this data type?
 data MergeRequestData = MergeRequestData {
     mergeRequestTargetBranch :: String,
     mergeRequestSourceBranch :: String
     -- mergeRequestCommits      :: [Commit]
-} deriving (Show, Eq)
+} deriving (Eq, Show)
 
 -- merge request typical examples :
 -- https://git.something.com/project/front/merge_requests/2939/diffs
@@ -43,7 +43,8 @@ parseMergeRequest s =
     case matched of
         (_, _, _, base:project:id:_) -> Just (MergeRequest (read id) base project)
         _                            -> Nothing
-    where matched = s =~ "(https?://[\\w.]*)/([\\w-]*/[\\w-]*)/merge_requests/(\\d+)" :: (String, String, String, [String])
+    where matched = s =~ "(https?://[\\w.]*)/([\\w-]*/[\\w-]*)/merge_requests/(\\d+)"
+                    :: (String, String, String, [String])
 
 -- print a merge request
 printMergeRequest :: MergeRequest -> String
@@ -54,8 +55,8 @@ printMergeRequest (MergeRequest id base project) = base ++ "/" ++ project ++ "/m
 mergeRequestCommits :: MergeRequest -> IO ()
 mergeRequestCommits m = do
     response <- httpJSON $ prepareGitLabRequest $ C8.pack "/projects"
-    C8.putStrLn . C8.pack $ "The response was: " ++ show (getResponseBody response :: Value)
-    C8.putStrLn . C8.pack $ "The status code was: " ++ show (getResponseStatusCode response)
+    putStrLn $ "The response was: " ++ show (getResponseBody response :: Value)
+    putStrLn $ "The status code was: " ++ show (getResponseStatusCode response)
 
 prepareGitLabRequest :: C8.ByteString -> Request
 prepareGitLabRequest path =
