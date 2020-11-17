@@ -53,20 +53,20 @@ printMergeRequest (MergeRequest id base project) = base ++ "/" ++ project ++ "/m
 -- mergeRequestCommits :: MergeRequest -> IO [Commit]
 mergeRequestCommits :: MergeRequest -> IO ()
 mergeRequestCommits m = do
-    response <- httpJSON $ prepareGitLabRequest "/projects"
+    response <- httpJSON $ prepareGitLabRequest $ C8.pack "/projects"
     C8.putStrLn . C8.pack $ "The response was: " ++ show (getResponseBody response :: Value)
     C8.putStrLn . C8.pack $ "The status code was: " ++ show (getResponseStatusCode response)
 
-prepareGitLabRequest :: String -> Request
+prepareGitLabRequest :: C8.ByteString -> Request
 prepareGitLabRequest path =
-            setRequestPath (C8.pack path)
-            $ setRequestHost (C8.pack "https://gitlab.com/api/v4/")
+            setRequestPath (C8.pack "/api/v4" `C8.append` path)
+            $ setRequestHost (C8.pack "gitlab.com")
             -- TODO: put authorization bearer into configuration file + revoke it as it has been disclosed
             $ setRequestHeaders [(CI.mk (C8.pack "Authorization"), C8.pack "Bearer ELLAJvrdz2H3YoMzcPvm")] 
             $ setRequestQueryString [(C8.pack "membership", Just (C8.pack "true"))]
             $ setRequestMethod (C8.pack "GET")
             $ setRequestSecure True
-            $ setRequestPort 80
+            $ setRequestPort 443
             $ defaultRequest
 
 -- TODO: retrieve last X commits of a project by its project name
