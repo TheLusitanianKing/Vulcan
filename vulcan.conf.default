@@ -1,3 +1,0 @@
-submodules = [
-    ("submodule/path", 0)
-]
