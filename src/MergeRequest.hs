@@ -6,7 +6,6 @@ import GitLabAPI (prepareGitLabRequest)
 import Text.Regex.PCRE ((=~))
 import Network.HTTP.Simple (getResponseBody, getResponseStatusCode, httpJSON)
 import Data.Aeson (Value)
-import qualified Data.ByteString.Char8 as C8
 
 -- extracted data of a merge request URI
 data MergeRequest = MergeRequest {
@@ -32,6 +31,6 @@ printMergeRequest (MergeRequest id base project) = base ++ "/" ++ project ++ "/m
 -- mergeRequestCommits :: MergeRequest -> IO [Commit]
 mergeRequestCommits :: MergeRequest -> IO ()
 mergeRequestCommits m = do
-    response <- httpJSON $ prepareGitLabRequest $ C8.pack "/projects"
+    response <- httpJSON $ prepareGitLabRequest "/projects" []
     putStrLn $ "The response was: " ++ show (getResponseBody response :: Value)
     putStrLn $ "The status code was: " ++ show (getResponseStatusCode response)
