@@ -24,7 +24,8 @@ executable vulcan-raven
   main-is:             Main.hs
   other-modules:       Commit,
                        GitLabAPI,
-                       MergeRequest
+                       MergeRequest,
+                       Submodule
   -- other-extensions:
   build-depends:       base >= 4.13 && < 4.14,
                        regex-pcre >= 0.95,
