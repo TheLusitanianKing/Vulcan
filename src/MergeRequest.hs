@@ -2,11 +2,11 @@
 module MergeRequest where
     -- TODO: import only wanted functions
 
+import GitLabAPI (prepareGitLabRequest)
 import Text.Regex.PCRE ((=~))
-import Network.HTTP.Simple
+import Network.HTTP.Simple (getResponseBody, getResponseStatusCode, httpJSON)
 import Data.Aeson (Value)
 import qualified Data.ByteString.Char8 as C8
-import qualified Data.CaseInsensitive as CI
 
 -- extracted data of a merge request URI
 data MergeRequest = MergeRequest {
@@ -14,28 +14,6 @@ data MergeRequest = MergeRequest {
     mergeRequestBaseURL :: String, -- its base URL, e.g. "https://git.something.com"
     mergeRequestProject :: String -- the concerned project, e.g. "myproject/subproject"
 } deriving (Eq, Show)
-
--- TODO: needed? move this stuff?
-data Commit = Commit {
-    commitHash   :: String,
-    commitName   :: String,
-    commitAuthor :: String
-} deriving (Eq, Show)
-
--- TODO: do I really want this data type?
-data MergeRequestData = MergeRequestData {
-    mergeRequestTargetBranch :: String,
-    mergeRequestSourceBranch :: String
-    -- mergeRequestCommits      :: [Commit]
-} deriving (Eq, Show)
-
--- merge request typical examples :
--- https://git.something.com/project/front/merge_requests/2939/diffs
-mr1 = MergeRequest 2939 "https://git.something.com/" "project/front"
--- https://git.something.com/project/api/merge_requests/1993/diffs
-mr2 = MergeRequest 1993 "https://git.something.com/" "project/api"
--- https://git.something.com/project/api-front/merge_requests/1580
-mr3 = MergeRequest 1580 "https://git.something.com/" "project/api-front"
 
 -- parse a merge request URI
 parseMergeRequest :: String -> Maybe MergeRequest 
@@ -57,19 +35,3 @@ mergeRequestCommits m = do
     response <- httpJSON $ prepareGitLabRequest $ C8.pack "/projects"
     putStrLn $ "The response was: " ++ show (getResponseBody response :: Value)
     putStrLn $ "The status code was: " ++ show (getResponseStatusCode response)
-
-prepareGitLabRequest :: C8.ByteString -> Request
-prepareGitLabRequest path =
-            setRequestPath (C8.pack "/api/v4" `C8.append` path)
-            $ setRequestHost (C8.pack "gitlab.com")
-            -- TODO: put authorization bearer into configuration file + revoke it as it has been disclosed
-            $ setRequestHeaders [(CI.mk (C8.pack "Authorization"), C8.pack "Bearer ELLAJvrdz2H3YoMzcPvm")] 
-            $ setRequestQueryString [(C8.pack "membership", Just (C8.pack "true"))]
-            $ setRequestMethod (C8.pack "GET")
-            $ setRequestSecure True
-            $ setRequestPort 443
-            $ defaultRequest
-
--- TODO: retrieve last X commits of a project by its project name
-projectCommitsByProjectName :: String -> Int -> [Commit]
-projectCommitsByProjectName = undefined
