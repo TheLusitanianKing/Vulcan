@@ -1,7 +1,7 @@
 module Main where
 
 import System.Environment (getArgs)
-import MergeRequest
+import MergeRequest (parseMergeRequest, printMergeRequest)
 
 main :: IO ()
 main = getArgs >>=

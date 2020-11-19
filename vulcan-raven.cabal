@@ -32,6 +32,8 @@ executable vulcan-raven
                        http-conduit >= 2.3.7,
                        aeson >= 1.5.4,
                        bytestring >= 0.9,
-                       case-insensitive >= 1.2.1
+                       case-insensitive >= 1.2.1,
+                       ConfigFile >= 1.1.4,
+                       MissingH >= 1.4.3
   hs-source-dirs:      src
   default-language:    Haskell2010
