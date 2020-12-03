@@ -2,10 +2,7 @@
 module MergeRequest where
     -- TODO: import only wanted functions
 
-import GitLabAPI (prepareGitLabRequest)
 import Text.Regex.PCRE ((=~))
-import Network.HTTP.Simple (getResponseBody, getResponseStatusCode, httpJSON)
-import Data.Aeson (Value)
 
 -- extracted data of a merge request URI
 data MergeRequest = MergeRequest {
@@ -30,7 +27,4 @@ printMergeRequest (MergeRequest id base project) = base ++ "/" ++ project ++ "/m
 -- TODO: retrieve commit list from a merge request
 -- mergeRequestCommits :: MergeRequest -> IO [Commit]
 mergeRequestCommits :: MergeRequest -> IO ()
-mergeRequestCommits m = do
-    response <- httpJSON $ prepareGitLabRequest "/projects" []
-    putStrLn $ "The response was: " ++ show (getResponseBody response :: Value)
-    putStrLn $ "The status code was: " ++ show (getResponseStatusCode response)
+mergeRequestCommits = undefined
