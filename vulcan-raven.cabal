@@ -25,7 +25,7 @@ executable vulcan-raven
   other-modules:       Commit,
                        GitLabAPI,
                        MergeRequest,
-                       Submodule
+                       Project
   -- other-extensions:
   build-depends:       base >= 4.13 && < 4.14,
                        regex-pcre >= 0.95,

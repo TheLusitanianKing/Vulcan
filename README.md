@@ -8,6 +8,7 @@ Vulcan Raven is our support assistant for automatic Git actions and guidelines.
 From a GitLab merge request URI, he can :
 - Check if the merge request have some commits behind the target branch and it therefore needs a manual action
 - If the merge request contains a single commit forwarding Git submodules, it verifies the commit name contains "[FORWARD]" as it is a convention and check for each forward that the target commit is the last of the target branch.
+
 If it's not a merge request URI, from a target branch name, he can :
 - List the X last commits of all configured submodules (hash, name, author)
 

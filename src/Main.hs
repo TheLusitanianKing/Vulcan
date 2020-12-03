@@ -2,6 +2,7 @@ module Main where
 
 import System.Environment (getArgs)
 import MergeRequest (parseMergeRequest, printMergeRequest)
+import Commit
 
 main :: IO ()
 main = getArgs >>=
