@@ -22,7 +22,8 @@ extra-source-files:  CHANGELOG.md, README.md
 
 executable vulcan-raven
   main-is:             Main.hs
-  other-modules:       Commit,
+  other-modules:       API,
+                       Commit,
                        Config,
                        MergeRequest,
                        Project
