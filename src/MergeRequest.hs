@@ -1,9 +1,5 @@
 -- Handle GitLab merge requests
-module MergeRequest (
-    MergeRequestURI(..),
-    parseMergeRequest,
-    printMergeRequest
-) where
+module MergeRequest where
 
 import Text.Regex.PCRE ((=~))
 

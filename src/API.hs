@@ -1,8 +1,4 @@
-module API (
-    fetchMergeRequest,
-    fetchProjectFromMergeRequest,
-    fetchLastXCommitFromBranch
-) where
+module API where
 
 import Config (server, serverFromMergeRequest)
 import qualified Data.Text as T
@@ -33,11 +29,23 @@ fetchProjectFromMergeRequest m = do
         [] -> return Nothing
         (p:_) -> return (Just p)
 
-fetchMergeRequest :: MergeRequestURI -> Project -> IO (Maybe MergeRequest)
-fetchMergeRequest m p = do
+fetchMergeRequestWithProject :: MergeRequestURI -> Project -> IO (Maybe MergeRequest)
+fetchMergeRequestWithProject m p = do
     let config = serverFromMergeRequest m
     mergeRequests <- runGitLab config (mergeRequests p)
     let filteredMergeRequests = filter (\mr -> merge_request_id mr == mergeRequestId m) mergeRequests
     case filteredMergeRequests of
         [] -> return Nothing
         (mr:_) -> return (Just mr)
+
+fetchMergeRequest :: MergeRequestURI -> IO (Maybe MergeRequest)
+fetchMergeRequest m = do
+    project <- fetchProjectFromMergeRequest m
+    -- TODO: remove this escalator
+    case project of
+        Nothing -> return Nothing
+        Just project -> do
+            mr <- fetchMergeRequestWithProject m project
+            case mr of
+                Nothing -> return Nothing
+                Just mr -> return (Just mr)
