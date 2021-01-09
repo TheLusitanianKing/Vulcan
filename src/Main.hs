@@ -17,5 +17,5 @@ handleMergeRequest m =
         Nothing -> putStrLn "..."
         Just m -> do
             mr <- fetchMergeRequest m
-            putStrLn . show $ mr
+            print mr
     where parsedMR = parseMergeRequest m

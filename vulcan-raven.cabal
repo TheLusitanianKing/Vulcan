@@ -30,7 +30,7 @@ executable vulcan-raven
   -- other-extensions:
   build-depends:       base >= 4.13 && < 4.14,
                        regex-pcre >= 0.95,
-                       gitlab-haskell >= 0.2.3,
+                       gitlab-haskell >= 0.2.4,
                        text >= 1.2.4
   hs-source-dirs:      src
   default-language:    Haskell2010
