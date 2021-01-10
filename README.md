@@ -1,34 +1,40 @@
 # Vulcan
-GitLab merge requests assistant
+Merge requests validation helper
 
 ## Who is Vulcan?
-Vulcan is a support assistant for automatic Git actions and guidelines.
+Vulcan is an assistant for automatic VCS actions around merge requests.
 
 ## Context
-Teams working with Git submodules need to forward them. Usually, if we updated a submodule on a particular branch, we will want to the main project to update the target commit of this submodule. Therefore, we often need to check manually if the submodule commit is the right one.
+Teams working with Git submodules need to forward them. Usually, when updating a submodule, we will want the main project to update the target commit of this submodule. Therefore, we often need to check manually if the targeted commit is the right one in a merge request.
 
-## What will he be able to do?
-From a GitLab merge request URI, he will be able to :
+## Supports
+- GitLab :white_check_mark:
+- GitHub :x:
+- BitBucket :x:
+- ...
+
+## What is it able to do?
+From a merge request URI, it can :
 - Check if the merge request have some commits behind the target branch and it therefore needs a manual action like rebasing.
 - If the merge request contains only commits forwarding Git submodules, it verifies that the commit name contains "[FORWARD]" as it is a convention and check for each forward that the target commit is the last of the target branch.
 
-If you pass it a branch name, he will :
+If you pass it a branch name, it will :
 - List the X last commits of all configured submodules (hash, name, author) of that branch (if it exists)
 
-If the merge request needs manual validation, Vulcan won't do anything, he will let you know.
+If the merge request needs manual validation, it will let you know.
 
 ## Configuration
 There are 2 configuration files, one for Vulcan's main configuration and another one for projects listing.
 
 ### Vulcan's configuration
-Vulcan's configuration is mainly about how to access GitLab from the script (GitLab's URL, your token, etc.).
+This configuration file is mainly about how to access your VCS from the script (URL, your token, etc.).
 ```bash
 cp vulcan.conf.default vulcan.conf
 vim vulcan.conf # edit the file with your configuration
 ```
 
 ### Projects' configuration
-This configuration is about listing all the submodules you are using and their GitLab's ID.
+This configuration is about listing all the submodules you are using and their ID.
 ```bash
 cp projects.conf.default projects.conf
 vim projects.conf # edit the file with your submodules
