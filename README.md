@@ -1,25 +1,48 @@
-# Vulcan Raven
-Our assistant for GitLab merge requests
+# Vulcan
+Merge requests validation helper
 
-## Who is Vulcan Raven?
-Vulcan Raven is our support assistant for automatic Git actions and guidelines.
+## Who is Vulcan?
+Vulcan is an assistant for automatic VCS actions around merge requests.
 
-## What can he do?
-From a GitLab merge request URI, he can :
-- Check if the merge request have some commits behind the target branch and it therefore needs a manual action
-- If the merge request contains a single commit forwarding Git submodules, it verifies the commit name contains "[FORWARD]" as it is a convention and check for each forward that the target commit is the last of the target branch.
+## Context
+Teams working with Git submodules need to forward them. Usually, when updating a submodule, we will want the main project to update the target commit of this submodule. Therefore, we often need to check manually if the targeted commit is the right one in a merge request.
 
-If it's not a merge request URI, from a target branch name, he can :
-- List the X last commits of all configured submodules (hash, name, author)
+## Supports
+- GitLab :white_check_mark:
+- GitHub :x:
+- BitBucket :x:
+- ...
 
-If the merge request needs manual validation, Vulcan Raven won't do anything, he will let you know.
+## What is it able to do?
+From a merge request URI, it can :
+- Check if the merge request have some commits behind the target branch and it therefore needs a manual action like rebasing.
+- If the merge request contains only commits forwarding Git submodules, it verifies that the commit name contains "[FORWARD]" as it is a convention and check for each forward that the target commit is the last of the target branch.
+
+If you pass it a branch name, it will :
+- List the X last commits of all configured submodules (hash, name, author) of that branch (if it exists)
+
+If the merge request needs manual validation, it will let you know.
 
 ## Configuration
-TODO
+There are 2 configuration files, one for Vulcan's main configuration and another one for projects listing.
+
+### Vulcan's configuration
+This configuration file is mainly about how to access your VCS from the script (URL, your token, etc.).
+```bash
+cp vulcan.conf.default vulcan.conf
+vim vulcan.conf # edit the file with your configuration
+```
+
+### Projects' configuration
+This configuration is about listing all the submodules you are using and their ID.
+```bash
+cp projects.conf.default projects.conf
+vim projects.conf # edit the file with your submodules
+```
 
 ## How does it work?
 ```
-> ./vulcan https://git.something.com/project/subproject/merge_requests/199
+> ./vulcan https://git.something.com/namespace/project/merge_requests/199
 
 The merge request has 2 commits behind: update your branch.
 ```
@@ -61,8 +84,5 @@ The following submodules have a branch `us_283532_statistics`, here are their la
         - @3ujf390 - Commit F
 ```
 
-## Progress
-Work in progress... 5%
-
-## Disclaimer
+## License
 TODO
