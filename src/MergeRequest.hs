@@ -3,7 +3,7 @@
 -- Description : Handle merge requests URI parsing the information it can get only from the URL
 -- License     : MIT
 -- Maintainer  : The Lusitanian King <alexlusitanian@gmail.com>
-module MergeRequest (MergeRequestURI(..), parseMergeRequest) where
+module MergeRequest where
 
 import Text.Regex.PCRE ((=~))
 

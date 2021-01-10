@@ -1,14 +1,14 @@
 module Main where
 
-import API (mergeRequestFromURI)
-import Config (Configuration(..), readConfigFile, serverFromMergeRequest)
+import API
+import Config
 import Data.Maybe (fromMaybe)
 import qualified Data.Text as T
 import GitLab (runGitLab)
 import GitLab.API.Projects (projectsWithName)
 import GitLab.Types (GitLabServerConfig(..), MergeRequest(..))
-import MergeRequest (MergeRequestURI(..), parseMergeRequest)
-import Project (readProjectConfigFile)
+import MergeRequest
+import Project
 import System.Environment (getArgs)
 
 main :: IO ()

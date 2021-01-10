@@ -5,14 +5,9 @@
 -- Description : Handle API requests
 -- License     : MIT
 -- Maintainer  : The Lusitanian King <alexlusitanian@gmail.com>
-module API (mergeRequestFromURI) where
+module API where
 
---import Config (serverFromConfig, serverFromMergeRequest)
 import Data.Either (fromRight)
-import Data.Text (Text)
-import qualified Data.Text as T
--- import GitLab (runGitLab)
--- import GitLab.API.Commits (projectCommits')
 import GitLab.API.MergeRequests (mergeRequest)
 import GitLab.API.Projects (projectsWithName)
 import GitLab.Types (GitLab(..), MergeRequest(..))

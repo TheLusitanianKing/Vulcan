@@ -5,7 +5,7 @@
 -- Description : Handle projects listing from config file
 -- License     : MIT
 -- Maintainer  : The Lusitanian King <alexlusitanian@gmail.com>
-module Project (readProjectConfigFile) where
+module Project where
 
 import Data.Char (isSpace)
 import Data.Text (Text)
