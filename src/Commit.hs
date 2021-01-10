@@ -1,6 +1,11 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module Commit where
+-- |
+-- Module      : Commit
+-- Description : Handle commits display
+-- License     : MIT
+-- Maintainer  : The Lusitanian King <alexlusitanian@gmail.com>
+module Commit (format) where
 
 import Data.Text (Text)
 import qualified Data.Text as T

@@ -1,21 +1,26 @@
 module Main where
 
-import API (fetchMergeRequest)
-import MergeRequest (parseMergeRequest)
+import API (mergeRequestFromURI)
+import Config (Configuration(..), readConfigFile, serverFromMergeRequest)
+import Data.Maybe (fromMaybe)
+import qualified Data.Text as T
+import GitLab (runGitLab)
+import GitLab.API.Projects (projectsWithName)
+import GitLab.Types (GitLabServerConfig(..), MergeRequest(..))
+import MergeRequest (MergeRequestURI(..), parseMergeRequest)
+import Project (readProjectConfigFile)
 import System.Environment (getArgs)
 
 main :: IO ()
 main = do
+    cfg <- readConfigFile "vulcan.conf"
+    ps  <- readProjectConfigFile "projects.conf"
     args <- getArgs
     case args of
-        []      -> putStrLn "..."
-        (arg:_) -> handleMergeRequest arg
-
-handleMergeRequest :: String -> IO ()
-handleMergeRequest m =
-    case parsedMR of
-        Nothing -> putStrLn "..."
-        Just m -> do
-            mr <- fetchMergeRequest m
-            print mr
-    where parsedMR = parseMergeRequest m
+        []      -> putStrLn "./vulcan ..." -- TODO: give help here
+        (uri:_) -> do
+            case parseMergeRequest uri of
+                Nothing -> putStrLn "URI isn't a valid merge request"
+                Just mruri -> do
+                    mr <- runGitLab (serverFromMergeRequest mruri cfg) (mergeRequestFromURI mruri)
+                    print mr
