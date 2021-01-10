@@ -3,7 +3,7 @@ cabal-version:       >= 1.10
 -- init'.  For further documentation, see
 -- http://haskell.org/cabal/users-guide/
 
-name:                vulcan-raven
+name:                vulcan
 version:             0.1.0.0
 synopsis:            Merge request validation helper
 description:
