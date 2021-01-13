@@ -8,6 +8,7 @@
 module API where
 
 import Data.Either (fromRight)
+import qualified Data.Text as T
 import GitLab.API.MergeRequests (mergeRequest)
 import GitLab.API.Projects (projectsWithName)
 import GitLab.Types (GitLab(..), MergeRequest(..))
