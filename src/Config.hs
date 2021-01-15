@@ -13,7 +13,7 @@ import qualified Data.Text as T
 import qualified Data.Text.IO as T.IO
 import GitLab (defaultGitLabServer)
 import GitLab.Types (GitLabServerConfig(..))
-import MergeRequest (MergeRequestURI(..))
+import MergeRequest (MergeRequestURL(..))
 
 type ID = Text
 type Value = Text
@@ -21,11 +21,22 @@ type ConfigurationValue = (ID, Value)
 type Configuration = [ConfigurationValue]
 
 -- | Get GitLab server config from a merge request URI
-serverFromMergeRequest :: MergeRequestURI -> Configuration -> GitLabServerConfig
-serverFromMergeRequest (MergeRequestURI _ url _) cfg =
+serverFromMergeRequest :: MergeRequestURL -> Configuration -> GitLabServerConfig
+serverFromMergeRequest (MergeRequestURL _ baseUrl _) cfg =
     case lookup "token" cfg of
-        Nothing    -> error "Could not found server configuration from file"
-        Just token -> defaultGitLabServer { url = T.pack url, token = token }
+        Nothing    -> error "Missing token to create server from merge request URL"
+        Just token -> defaultGitLabServer { url = T.pack baseUrl, token = token }
+
+defaultServer :: Configuration -> GitLabServerConfig
+defaultServer cfg =
+    case looksups cfg of
+        Nothing            -> error "Could not create default server from config"
+        Just (token, base) -> defaultGitLabServer { url = base, token = token }
+    where looksups :: Configuration -> Maybe (Text, Text)
+          looksups cfg = do
+              token <- lookup "token" cfg
+              base  <- lookup "url" cfg
+              return (token, base)
 
 -- | Retrieving configuration from file
 readConfigFile :: FilePath -> IO Configuration

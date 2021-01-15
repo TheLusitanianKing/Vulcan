@@ -12,14 +12,14 @@ import qualified Data.Text as T
 import GitLab.API.MergeRequests (mergeRequest)
 import GitLab.API.Projects (projectsWithName)
 import GitLab.Types (GitLab(..), MergeRequest(..))
-import MergeRequest (MergeRequestURI(..))
+import MergeRequest (MergeRequestURL(..))
 
 -- | From a merge request URI, try to get the actual merge request from GitLab
-mergeRequestFromURI :: MergeRequestURI -> GitLab (Maybe MergeRequest)
-mergeRequestFromURI mruri = do
-    ps <- projectsWithName (T.pack $ mergeRequestProject mruri)
+mergeRequestFromURL :: MergeRequestURL -> GitLab (Maybe MergeRequest)
+mergeRequestFromURL mrurl = do
+    ps <- projectsWithName (T.pack $ mergeRequestProject mrurl)
     case ps of
         [] -> return Nothing
         p:_ -> do
-            mr <- mergeRequest p (mergeRequestId mruri)
-            return (fromRight (error "Could not get the merge request from URI") mr)
+            mr <- mergeRequest p (mergeRequestId mrurl)
+            return (fromRight (error "Could not fetch merge request from the URI") mr)

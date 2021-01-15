@@ -20,3 +20,6 @@ format c =     "#"
     `T.append` " <"
     `T.append` committer_email c
     `T.append` ">"
+
+indent :: Int -> Text -> Text
+indent n = (T.replicate n " " `T.append`)
