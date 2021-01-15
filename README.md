@@ -24,7 +24,7 @@ If you pass it a branch name, it will :
 If the merge request needs manual validation, it will let you know.
 
 ## Configuration
-There are 2 configuration files, one for Vulcan's main configuration and another one for projects listing.
+There are 2 configuration files, one for Vulcan's main configuration and another one for listing the submodules.
 
 ### Vulcan's configuration
 This configuration file is mainly about how to access your VCS from the script (URL, your token, etc.).
@@ -33,56 +33,26 @@ cp vulcan.conf.default vulcan.conf
 vim vulcan.conf # edit the file with your configuration
 ```
 
-### Projects' configuration
+### Projects' listing
 This configuration is about listing all the submodules you are using and their ID.
+As there is no simple way to retrieve this list and Vulcan needs it, you have to write them all.
 ```bash
-cp projects.conf.default projects.conf
-vim projects.conf # edit the file with your submodules
+cp submodules.conf.default submodules.conf
+vim submodules.conf # edit the file with your submodules
 ```
 
 ## How does it work?
-```
+Just pass it a merge request URL
+
+```bash
 > ./vulcan https://git.something.com/namespace/project/merge_requests/199
-
-The merge request has 2 commits behind: update your branch.
 ```
 
-```
-> ./vulcan https://git.something.com/project/subproject/merge_requests/6409
+OR a branch name
 
-The merge request contains forward commit(s) to the `branch_name` branch:
-    api-front:      to @f1242efw8327jf389f3 (last known commit in branch `branch_name`)
-        new commits:
-            - b934872 - Commit A
-            - g2jd94j - Commit B
-    api-back:       to @3umf3gm932gidsd9g30 (last known commit in branch `branch_name`)
-        new commits:
-            - 3ujf390 - Commit C
-The forward(s) are pointing to the right commits.
-```
-
-```
-> ./vulcan https://git.something.com/project/subproject/merge_requests/323
-
-The merge request has forward commit(s) but do not target the last commit of the `branch_name` target branch:
-    api-front:      to @skjig203ud382du3208
-                    should be @532fjig322d382du30987 (last known commit in branch `branch_name`)
-The merge request needs manual validation.
-```
-
-OR
-
-```
+```bash
 > ./vulcan us_283532_statistics
-
-The following submodules have a branch `us_283532_statistics`, here are their last X commits :
-    api-front:
-        - @b934872 - Commit A (last known commit in the target branch)
-        - @g2jd94j - Commit B
-        - @jgoer39 - Commit C
-    api-back:
-        - @3ujf390 - Commit F
 ```
 
 ## License
-TODO
+see [LICENSE](LICENSE) file
