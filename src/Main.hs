@@ -44,7 +44,7 @@ dealWithMergeRequestURL mrurl cfg = do
 dealWithTargetBranch :: GitLabServerConfig -> Text -> IO ()
 dealWithTargetBranch server targetBranch = do
     -- retrieve configured projects
-    ps <- readProjectConfigFile "projects.conf"
+    ps <- readProjectConfigFile "submodules.conf"
     -- time to retrieve commits for all projects on the target branch
     T.IO.putStrLn $ "Target branch is: " +-+ targetBranch +-+ "\n"
     -- print last commits on the configured projects

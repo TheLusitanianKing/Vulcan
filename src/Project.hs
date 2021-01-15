@@ -2,7 +2,7 @@
 
 -- |
 -- Module      : Project
--- Description : Handle projects listing from config file
+-- Description : Handle projects (or I should say submodules) listing from config file
 -- License     : MIT
 -- Maintainer  : The Lusitanian King <alexlusitanian@gmail.com>
 module Project where
