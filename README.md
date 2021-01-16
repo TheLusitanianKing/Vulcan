@@ -55,6 +55,7 @@ OR directly a branch name
 - Find a way to retrieve the submodule projects without having to list them all in the submodule configuration file.
 - Check if the merge request have some commits behind the target branch and it therefore needs a manual action like rebasing.
 - Check if the merge request contains only commits forwarding Git submodules, check for each forward that the target commit is the last of the target branch.
+- Add some tests would also be nice.
 - ...
 
 ## License
