@@ -1,6 +1,6 @@
 cabal-version:       >= 1.10
 name:                vulcan
-version:             0.1.0.0
+version:             0.1.0
 synopsis:            Merge request validation assistant
 description:
   An assistant for validating merge requests with submodules forward.

@@ -1,5 +1,4 @@
-# Revision history for vulcan-raven
+# Revision history for vulcan
 
-## 0.1.0.0 -- YYYY-mm-dd
-
-* First version. Released on an unsuspecting world.
+## 0.1.0 -- 2021-01-16
+* First working version with GitLab API. Display last 5 commits from merge request targeted branch or any given branch.
