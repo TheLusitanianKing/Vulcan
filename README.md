@@ -1,22 +1,20 @@
 # Vulcan
-Merge requests validation helper
-
-## Who is Vulcan?
-Vulcan is an assistant for automatic VCS actions around merge requests and submodules.
+Merge requests validation helper.
 
 ## Context
 Teams working with Git submodules need to forward them. Usually, when updating a submodule, we will want the main project to update the target commit of this submodule. Therefore, we often need to check manually if the targeted commit is the right one.
 
-## Supports
-- GitLab :white_check_mark: (using `gitlab-haskell` library)
-- GitHub :x:
-- BitBucket :x:
-- ...
+## Features
+From a merge request URL, it will:
+- Retrieve the target branch and then list the last 5 commits (hash, name, author) of all configured submodules on that branch.
+
+If you pass it a branch name, it will:
+- List the last 5 commits (hash, name, author) of all configured submodules of that branch (if it exists)
 
 ## Configuration
-There are 2 configuration files, one for Vulcan's configuration and preferences and another one for listing the submodules.
+There are 2 configuration files, one for Vulcan's main configuration and preferences and another one for listing the submodules.
 
-### Vulcan's configuration
+### Main configuration
 This configuration file is mainly about how to access your VCS from the script (default URL, your token and some other preferences).
 ```bash
 cp vulcan.conf.default vulcan.conf
@@ -31,14 +29,7 @@ cp submodules.conf.default submodules.conf
 vim submodules.conf # edit the file with your submodules
 ```
 
-## What can this script do?
-From a merge request URL, it will:
-- Retrieve the target branch and then list the 5 last commits of all configured submodules on that branch.
-
-If you pass it a branch name, it will:
-- List the 5 last commits of all configured submodules (hash, name, author) of that branch (if it exists)
-
-## How does it work?
+## Usage
 Just pass it a merge request URL
 
 ```bash
@@ -51,11 +42,19 @@ OR directly a branch name
 > cabal v2-run :vulcan us_283532_statistics
 ```
 
-# Future features / TO DO list
+## Future features / TO DO list
+- Read number of commits to display for each submodule from the preferences.
 - Find a way to retrieve the submodule projects without having to list them all in the submodule configuration file.
 - Check if the merge request have some commits behind the target branch and it therefore needs a manual action like rebasing.
 - Check if the merge request contains only commits forwarding Git submodules, check for each forward that the target commit is the last of the target branch.
-- Add some tests would also be nice.
+- Add some tests.
+- Support other VCS such as GitHub or Bitbucket.
+- ...
+
+## Supports
+- :white_check_mark: GitLab (using `gitlab-haskell` library)
+- :x: GitHub
+- :x: BitBucket
 - ...
 
 ## License
