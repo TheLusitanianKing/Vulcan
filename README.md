@@ -1,6 +1,8 @@
 # Vulcan
 Merge requests validation helper.
 
+<img src="https://static.wikia.nocookie.net/metalgear/images/2/22/Vulcan_Raven.jpg/revision/latest?cb=20060802225437" alt="vulcan-raven" width="150"/>
+
 ## Context
 Teams working with Git submodules need to forward them. Usually, when updating a submodule, we will want the main project to update the target commit of this submodule. Therefore, we often need to check manually if the targeted commit is the right one.
 
