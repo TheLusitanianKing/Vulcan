@@ -42,13 +42,13 @@ If you pass it a branch name, it will:
 Just pass it a merge request URL
 
 ```bash
-> ./vulcan https://git.something.com/namespace/project/merge_requests/199
+> cabal v2-run :vulcan https://git.something.com/namespace/project/merge_requests/199
 ```
 
 OR directly a branch name
 
 ```bash
-> ./vulcan us_283532_statistics
+> cabal v2-run :vulcan us_283532_statistics
 ```
 
 # Future features / TO DO list
