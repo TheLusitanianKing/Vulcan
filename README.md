@@ -33,23 +33,17 @@ vim submodules.conf # edit the file with your submodules
 Just pass it a merge request URL
 
 ```bash
-> cabal v2-run :vulcan https://git.something.com/namespace/project/merge_requests/199
+cabal v2-run :vulcan https://git.something.com/namespace/project/merge_requests/199
 ```
 
 OR directly a branch name
 
 ```bash
-> cabal v2-run :vulcan us_283532_statistics
+cabal v2-run :vulcan us_283532_statistics
 ```
 
 ## Future features / TO DO list
-- Read number of commits to display for each submodule from the preferences.
-- Find a way to retrieve the submodule projects without having to list them all in the submodule configuration file.
-- Check if the merge request have some commits behind the target branch and it therefore needs a manual action like rebasing.
-- Check if the merge request contains only commits forwarding Git submodules, check for each forward that the target commit is the last of the target branch.
-- Add some tests.
-- Support other VCS such as GitHub or Bitbucket.
-- ...
+See [Issues tagged with enhancement](https://github.com/TheLusitanianKing/Vulcan/labels/enhancement)
 
 ## Supports
 - :white_check_mark: GitLab (using `gitlab-haskell` library)
