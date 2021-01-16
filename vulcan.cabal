@@ -13,15 +13,16 @@ build-type:          Simple
 extra-source-files:  CHANGELOG.md, README.md
 
 executable vulcan
-  main-is:             Main.hs
-  other-modules:       API,
-                       Commit,
-                       Config,
-                       MergeRequest,
-                       Project
-  build-depends:       base >= 4.13 && < 4.14,
-                       regex-pcre >= 0.95,
-                       gitlab-haskell >= 0.2.5,
-                       text >= 1.2.4
-  hs-source-dirs:      src
-  default-language:    Haskell2010
+  main-is:          Main.hs
+  other-modules:    Alias,
+                    API,
+                    Commit,
+                    Config,
+                    MergeRequest,
+                    Project
+  build-depends:    base >= 4.13 && < 4.14,
+                    regex-pcre >= 0.95,
+                    gitlab-haskell >= 0.2.5,
+                    text >= 1.2.4
+  hs-source-dirs:   src
+  default-language: Haskell2010

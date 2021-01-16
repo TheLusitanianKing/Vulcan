@@ -2,6 +2,7 @@
 
 module Main where
 
+import Alias
 import API
 import Config
 import Commit
@@ -61,6 +62,3 @@ lastCommits server target (pname, pid) = do
         cs -> do
             T.IO.putStrLn $ "Last commits on " +-+ pname
             T.IO.putStrLn . T.unlines . map (indent 8 . format) $ cs
-
--- To make it overall a bit more concise
-(+-+) = T.append
