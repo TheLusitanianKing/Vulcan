@@ -8,17 +8,22 @@
 module Config where
 
 import Data.Char (isSpace)
+import Data.Maybe (fromMaybe)
 import Data.Text (Text)
 import qualified Data.Text as T
 import qualified Data.Text.IO as T.IO
 import GitLab (defaultGitLabServer)
 import GitLab.Types (GitLabServerConfig(..))
 import MergeRequest (MergeRequestURL(..))
+import Text.Read (readMaybe)
 
 type ID = Text
 type Value = Text
 type ConfigurationValue = (ID, Value)
 type Configuration = [ConfigurationValue]
+
+-- | Configuration filepath
+configFilepath = "conf/vulcan.conf"
 
 -- | Get GitLab server config from a merge request URI
 serverFromMergeRequest :: MergeRequestURL -> Configuration -> GitLabServerConfig
@@ -45,4 +50,11 @@ readConfigFile path = map parse . T.lines <$> T.IO.readFile path
           parse t
             | T.null v || T.null i = error $ "Could not parse configuration line: " ++ T.unpack t
             | otherwise            = (T.strip i, T.strip (T.tail v))
-            where (i, v) = T.break (=='=') t
+            where (i, v) = T.break (=='=') (T.takeWhile (/='#') t)
+
+-- | Retrieve number of commits to display for each submodules from configuration
+nbCommitsFromConfig :: Configuration -> Int
+nbCommitsFromConfig cfg = case lookup "nbCommits" cfg of
+    Nothing -> defaultValue
+    Just nb -> fromMaybe defaultValue (readMaybe . T.unpack $ nb)
+    where defaultValue = 5
