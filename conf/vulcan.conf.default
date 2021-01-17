@@ -1,0 +1,3 @@
+url       = https://yourgitlaburl.com # your GitLab URL
+token     = YOUR_TOKEN # your GitLab API token
+nbCommits = 5 # number of commits to display
