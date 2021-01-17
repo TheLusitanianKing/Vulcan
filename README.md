@@ -11,7 +11,7 @@ From a merge request URL, it will:
 - Retrieve the target branch and then list the last 5 commits (hash, name, author) of all configured submodules on that branch.
 
 If you pass it a branch name, it will:
-- List the last 5 commits (hash, name, author) of all configured submodules of that branch (if it exists)
+- List the last X commits (hash, name, author) of all configured submodules of that branch (if it exists)
 
 ## Configuration
 There are 2 configuration files, one for Vulcan's main configuration and preferences and another one for listing the submodules.
@@ -19,30 +19,32 @@ There are 2 configuration files, one for Vulcan's main configuration and prefere
 ### Main configuration
 This configuration file is mainly about how to access your VCS from the script (default URL, your token and some other preferences).
 ```bash
-cp vulcan.conf.default vulcan.conf
-vim vulcan.conf # edit the file with your configuration
+cp conf/vulcan.conf.default conf/vulcan.conf
+vim conf/vulcan.conf # edit the file with your configuration
 ```
 
 ### Listing submodules
 This configuration is about listing all the submodules you are using and their ID (you can usually find their ID in their main page).
 As there is no simple way to retrieve this list for now, and since Vulcan needs it, you have to write them all.
 ```bash
-cp submodules.conf.default submodules.conf
-vim submodules.conf # edit the file with your submodules
+cp conf/submodules.conf.default conf/submodules.conf
+vim conf/submodules.conf # edit the file with your submodules
 ```
 
 ## Usage
 Just pass it a merge request URL
 
 ```bash
-cabal v2-run :vulcan https://git.something.com/namespace/project/merge_requests/199
+cabal run :vulcan https://git.something.com/namespace/project/merge_requests/199
 ```
 
 OR directly a branch name
 
 ```bash
-cabal v2-run :vulcan us_283532_statistics
+cabal run :vulcan us_283532_statistics
 ```
+
+You can build it first, to run it faster as it won't have to build it before running with: `cabal build`
 
 ## Future features / TO DO list
 See [Issues tagged with enhancement](https://github.com/TheLusitanianKing/Vulcan/labels/enhancement)

@@ -21,8 +21,9 @@ executable vulcan
                     MergeRequest,
                     Project
   build-depends:    base >= 4.13 && < 4.14,
-                    regex-pcre >= 0.95,
+                    directory >= 1.1.0,
                     gitlab-haskell >= 0.2.5,
+                    regex-pcre >= 0.95,
                     text >= 1.2.4
   hs-source-dirs:   src
   default-language: Haskell2010

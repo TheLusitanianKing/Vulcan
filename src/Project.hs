@@ -17,6 +17,9 @@ type ProjectID            = Int
 type ProjectConfigValue   = (ProjectName, ProjectID)
 type ProjectConfiguration = [ProjectConfigValue]
 
+-- | Filepath to the submodules listing
+submodulesFilepath = "conf/submodules.conf"
+
 -- | Retrieving project configuration from file
 readProjectConfigFile :: FilePath -> IO ProjectConfiguration
 readProjectConfigFile path = map parse . T.lines <$> T.IO.readFile path
@@ -24,4 +27,4 @@ readProjectConfigFile path = map parse . T.lines <$> T.IO.readFile path
           parse t
             | T.null v || T.null i = error $ "Wrong configuration line: " ++ T.unpack t
             | otherwise            = (T.strip i, read . T.unpack . T.strip $ v)
-            where (i, v) = T.break isSpace t
+            where (i, v) = T.break isSpace (T.takeWhile (/='#') t)
