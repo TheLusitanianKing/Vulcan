@@ -1,6 +1,7 @@
 cabal-version:       >= 1.10
 name:                vulcan
-version:             0.1.0
+version:             0.2.0
+-- TODO: add 0.2.0 to CHANGELOG
 synopsis:            Merge request validation assistant
 description:
   An assistant for validating merge requests with submodules forward.
@@ -13,17 +14,44 @@ build-type:          Simple
 extra-source-files:  CHANGELOG.md, README.md
 
 executable vulcan
-  main-is:          Main.hs
-  other-modules:    Alias,
-                    API,
-                    Commit,
-                    Config,
-                    MergeRequest,
-                    Project
-  build-depends:    base >= 4.13 && < 4.14,
-                    directory >= 1.1.0,
-                    gitlab-haskell >= 0.2.5,
-                    regex-pcre >= 0.95,
-                    text >= 1.2.4
-  hs-source-dirs:   src
+  main-is: Main.hs
+  build-depends:
+    -- TODO: remove dependencies (except vulcan-lib)
+    base >= 4.13 && < 4.14,
+    directory >= 1.1.0,
+    gitlab-haskell >= 0.2.5,
+    text >= 1.2.4,
+    vulcan-lib
+  ghc-options: -Wall
+  default-language: Haskell2010
+
+library vulcan-lib
+  exposed-modules:
+    Alias,
+    API,
+    Commit,
+    Config,
+    MergeRequest,
+    Project
+  hs-source-dirs:
+    src
+  ghc-options: -Wall
+  build-depends:
+    base >= 4.13 && < 4.14,
+    gitlab-haskell >= 0.2.5,
+    regex-pcre >= 0.95,
+    text >= 1.2.4
+  default-language: Haskell2010
+
+test-suite test
+  type: exitcode-stdio-1.0
+  main-is: Tests.hs
+  hs-source-dirs:
+    tests
+  build-depends:
+    base >= 4.13 && < 4.14,
+    gitlab-haskell >= 0.2.5,
+    QuickCheck >= 2.14.2,
+    hspec >= 2.7.4,
+    vulcan-lib
   default-language: Haskell2010
