@@ -47,7 +47,9 @@ test-suite test
   type: exitcode-stdio-1.0
   main-is: Tests.hs
   hs-source-dirs:
-    tests
+    tests, tests/TestCases
+  other-modules:
+    TestMergeRequest
   build-depends:
     base >= 4.13 && < 4.14,
     gitlab-haskell >= 0.2.5,
