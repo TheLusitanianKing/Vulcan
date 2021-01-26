@@ -15,14 +15,14 @@ data MergeRequestURL = MergeRequestURL {
 } deriving (Eq)
 
 instance Show MergeRequestURL where
-    show (MergeRequestURL id base project) = base ++ "/" ++ project ++ "/merge_requests/" ++ show id
+    show (MergeRequestURL mid base project) = base ++ "/" ++ project ++ "/merge_requests/" ++ show mid
 
 -- | Parse a merge request URL
 parseMergeRequest :: String -> Maybe MergeRequestURL
 parseMergeRequest s =
     case matched of
-        (_, _, _, b:p:id:_) -> Just (MergeRequestURL (read id) b (projectName p))
-        _                   -> Nothing
+        (_, _, _, b:p:mid:_) -> Just (MergeRequestURL (read mid) b (projectName p))
+        _                    -> Nothing
     where matched = s =~ "(https?://[\\w.]*)/([\\w-]+/[\\w-]+)[/-]*/merge_requests/(\\d+)"
                     :: (String, String, String, [String])
           projectName p = tail name

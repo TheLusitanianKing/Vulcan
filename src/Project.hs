@@ -18,6 +18,7 @@ type ProjectConfigValue   = (ProjectName, ProjectID)
 type ProjectConfiguration = [ProjectConfigValue]
 
 -- | Filepath to the submodules listing
+submodulesFilepath :: String
 submodulesFilepath = "conf/submodules.conf"
 
 -- | Retrieving project configuration from file

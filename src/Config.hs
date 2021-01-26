@@ -7,7 +7,6 @@
 -- Maintainer  : The Lusitanian King <alexlusitanian@gmail.com>
 module Config where
 
-import Data.Char (isSpace)
 import Data.Maybe (fromMaybe)
 import Data.Text (Text)
 import qualified Data.Text as T
@@ -23,25 +22,26 @@ type ConfigurationValue = (ID, Value)
 type Configuration = [ConfigurationValue]
 
 -- | Configuration filepath
+configFilepath :: String
 configFilepath = "conf/vulcan.conf"
 
 -- | Get GitLab server config from a merge request URI
 serverFromMergeRequest :: MergeRequestURL -> Configuration -> GitLabServerConfig
 serverFromMergeRequest (MergeRequestURL _ baseUrl _) cfg =
     case lookup "token" cfg of
-        Nothing    -> error "Missing token to create server from merge request URL"
-        Just token -> defaultGitLabServer { url = T.pack baseUrl, token = token }
+        Nothing -> error "Missing token to create server from merge request URL"
+        Just tk -> defaultGitLabServer { url = T.pack baseUrl, token = tk }
 
 defaultServer :: Configuration -> GitLabServerConfig
 defaultServer cfg =
     case looksups cfg of
-        Nothing            -> error "Could not create default server from config"
-        Just (token, base) -> defaultGitLabServer { url = base, token = token }
+        Nothing         -> error "Could not create default server from config"
+        Just (tk, base) -> defaultGitLabServer { url = base, token = tk }
     where looksups :: Configuration -> Maybe (Text, Text)
-          looksups cfg = do
-              token <- lookup "token" cfg
-              base  <- lookup "url" cfg
-              return (token, base)
+          looksups c = do
+              tk   <- lookup "token" c
+              base <- lookup "url" c
+              return (tk, base)
 
 -- | Retrieving configuration from file
 readConfigFile :: FilePath -> IO Configuration

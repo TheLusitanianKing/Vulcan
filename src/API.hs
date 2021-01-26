@@ -11,7 +11,7 @@ import Data.Either (fromRight)
 import qualified Data.Text as T
 import GitLab.API.MergeRequests (mergeRequest)
 import GitLab.API.Projects (projectsWithName)
-import GitLab.Types (GitLab(..), MergeRequest(..))
+import GitLab.Types (GitLab, MergeRequest(..))
 import MergeRequest (MergeRequestURL(..))
 
 -- | From a merge request URI, try to get the actual merge request from GitLab
