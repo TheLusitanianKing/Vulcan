@@ -49,6 +49,7 @@ test-suite test
   hs-source-dirs:
     tests, tests/TestCases
   other-modules:
+    TestCommit,
     TestMergeRequest
   build-depends:
     base >= 4.13 && < 4.14,

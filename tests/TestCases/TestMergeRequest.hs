@@ -1,8 +1,7 @@
 module TestMergeRequest where
 
-import Test.Hspec
-import Test.QuickCheck
 import MergeRequest
+import Test.Hspec
 
 mergeRequestTests :: Spec
 mergeRequestTests = do
