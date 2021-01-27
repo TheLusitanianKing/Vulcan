@@ -1,4 +1,4 @@
-# Vulcan
+# Vulcan ![Unit tests](https://github.com/TheLusitanianKing/Vulcan/workflows/Haskell%20CI/badge.svg)
 Merge requests validation helper.
 
 <img src="https://static.wikia.nocookie.net/metalgear/images/2/22/Vulcan_Raven.jpg/revision/latest?cb=20060802225437" alt="vulcan-raven" width="150"/>
@@ -8,7 +8,7 @@ Teams working with Git submodules need to forward them. Usually, when updating a
 
 ## Features
 From a merge request URL, it will:
-- Retrieve the target branch and then list the last 5 commits (hash, name, author) of all configured submodules on that branch.
+- Retrieve the target branch and then list the last X commits (hash, name, author) of all configured submodules on that branch.
 
 If you pass it a branch name, it will:
 - List the last X commits (hash, name, author) of all configured submodules of that branch (if it exists)
