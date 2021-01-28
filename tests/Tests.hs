@@ -8,6 +8,6 @@ import TestMergeRequest (mergeRequestTests)
 
 main :: IO ()
 main = hspec $ do
-  commitTests
-  configTests
-  mergeRequestTests
+    commitTests
+    configTests
+    mergeRequestTests
