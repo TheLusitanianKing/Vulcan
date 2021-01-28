@@ -50,6 +50,7 @@ test-suite test
     tests, tests/TestCases
   other-modules:
     TestCommit,
+    TestConfig,
     TestMergeRequest
   build-depends:
     base >= 4.13 && < 4.14,
