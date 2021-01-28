@@ -11,7 +11,7 @@ From a merge request URL, it will:
 - Retrieve the target branch and then list the last X commits (hash, name, author) of all configured submodules on that branch.
 
 If you pass it a branch name, it will:
-- List the last X commits (hash, name, author) of all configured submodules of that branch (if it exists)
+- List the last X commits (hash, name, author) of all configured submodules of that branch (if it exists).
 
 ## Configuration
 There are 2 configuration files, one for Vulcan's main configuration and preferences and another one for listing the submodules.
@@ -44,10 +44,10 @@ OR directly a branch name
 cabal run :vulcan us_283532_statistics
 ```
 
-You can build it first, to run it faster as it won't have to build it before running with: `cabal build`
+You can build it first, to run it faster as it won't have to build it before running with: `cabal build`.
 
 ## Future features / TO DO list
-See [Issues tagged with enhancement](https://github.com/TheLusitanianKing/Vulcan/labels/enhancement)
+See [Issues tagged with enhancement](https://github.com/TheLusitanianKing/Vulcan/labels/enhancement).
 
 ## Supports
 - :white_check_mark: GitLab (using `gitlab-haskell` library)
@@ -56,4 +56,4 @@ See [Issues tagged with enhancement](https://github.com/TheLusitanianKing/Vulcan
 - ...
 
 ## License
-see [LICENSE](LICENSE) file
+see [LICENSE](LICENSE) file.
