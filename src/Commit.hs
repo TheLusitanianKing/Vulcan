@@ -17,10 +17,19 @@ format :: Commit -> Text
 format c = "#"
        +-+ short_id c
        +-+ " - "
-       +-+ title c
+       +-+ fit 40 (title c)
        +-+ " <"
        +-+ committer_email c
        +-+ ">"
 
+-- | Fit the title in X characters
+fit :: Int  -- ^ size
+    -> Text -- ^ title to fit
+    -> Text
+fit n t | remaining < 0 = T.take (n-3) t +-+ "..."
+        | otherwise     = t +-+ T.replicate remaining " "
+        where remaining = n - T.length t
+
+-- | Indenting
 indent :: Int -> Text -> Text
 indent n = (T.replicate n " " +-+)

@@ -2,8 +2,8 @@
 
 module TestCommit where
 
-import Commit (indent)
-import Test.Hspec
+import Commit (fit, indent)
+import Test.Hspec hiding (fit)
 
 commitTests :: Spec
 commitTests = do
@@ -17,3 +17,18 @@ commitTests = do
             indent 4 "West Ham United"
             `shouldBe`
             "    West Ham United"
+        
+        it "Make commit title fit the wanted size" $ do
+            fit 20 "Académico de Viseu"
+            `shouldBe`
+            "Académico de Viseu  "
+        
+        it "Make commit title shorter to fit the wanted size" $ do
+            fit 15 "HNK Hajduk Split"
+            `shouldBe`
+            "HNK Hajduk S..."
+        
+        it "Use fit on a commit that is already the wanted size" $ do
+            fit 8 "Portugal"
+            `shouldBe`
+            "Portugal"
