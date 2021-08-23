@@ -2,7 +2,6 @@
 
 module Main where
 
-import Alias
 import API
 import Config
 import Commit
@@ -53,7 +52,7 @@ dealWithTargetBranch server cfg targetBranch = do
     if doesListingExist then do
         ps <- readProjectConfigFile submodulesFilepath
         -- time to retrieve commits for all projects on the target branch
-        T.IO.putStrLn $ "Target branch is: " +-+ targetBranch +-+ "\n"
+        T.IO.putStrLn $ "Target branch is: " <> targetBranch <> "\n"
         -- print last commits on the configured projects
         mapM_ (lastCommits server targetBranch nbCommits) ps
     else error "Missing submodules listing, please follow the configuration instructions."
@@ -65,7 +64,7 @@ lastCommits server target nbCommits (pname, pid) = do
     let commits = fromRight (error "Could not retrieve commits.") cs
     case take nbCommits commits of
         [] ->
-            T.IO.putStrLn $ "No branch " +-+ target +-+ " on " +-+ pname +-+ ".\n"
+            T.IO.putStrLn $ "No branch " <> target <> " on " <> pname <> ".\n"
         cs -> do
-            T.IO.putStrLn $ "Last commits on " +-+ pname +-+ ":"
+            T.IO.putStrLn $ "Last commits on " <> pname <> ":"
             T.IO.putStrLn . T.unlines . map (indent 8 . format) $ cs

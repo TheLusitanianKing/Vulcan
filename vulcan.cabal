@@ -1,7 +1,6 @@
 cabal-version:       >= 1.10
 name:                vulcan
 version:             0.2.0
--- TODO: add 0.2.0 to CHANGELOG
 synopsis:            Merge request validation assistant
 description:
   An assistant for validating merge requests with submodules forward.
@@ -11,7 +10,7 @@ license-file:        LICENSE
 author:              The Lusitanian King
 maintainer:          alexlusitanian@gmail.com
 build-type:          Simple
-extra-source-files:  CHANGELOG.md, README.md
+extra-source-files:  README.md
 
 executable vulcan
   main-is: Main.hs
@@ -27,7 +26,6 @@ executable vulcan
 
 library vulcan-lib
   exposed-modules:
-    Alias,
     API,
     Commit,
     Config,
