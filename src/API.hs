@@ -17,9 +17,9 @@ import MergeRequest (MergeRequestURL(..))
 -- | From a merge request URI, try to get the actual merge request from GitLab
 mergeRequestFromURL :: MergeRequestURL -> GitLab (Maybe MergeRequest)
 mergeRequestFromURL mrurl = do
-    ps <- projectsWithName (T.pack $ mergeRequestProject mrurl)
+    ps <- projectsWithName (T.pack $ _mergeRequestProject mrurl)
     case ps of
         [] -> return Nothing
         p:_ -> do
-            mr <- mergeRequest p (mergeRequestId mrurl)
+            mr <- mergeRequest p (_mergeRequestId mrurl)
             return (fromRight (error "Could not fetch merge request from the URI") mr)

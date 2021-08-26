@@ -4,6 +4,7 @@ module Main where
 
 import API
 import Config
+import Control.Monad (unless, when)
 import Commit
 import Data.Either (fromRight)
 import Data.Text (Text)
@@ -19,49 +20,46 @@ import System.Environment (getArgs)
 
 main :: IO ()
 main = do
+    -- read input
     args <- getArgs
-    if null args then putStrLn "You should give a merge request or a branch name."
-    else do
-        -- retrieve configuration
-        isConfigExisting <- doesFileExist configFilepath
-        if isConfigExisting then do
-            cfg <- readConfigFile configFilepath
-            -- parsing
-            let arg = head args -- keep only the first argument, ignoring the others
-            case parseMergeRequest arg of
-                Nothing    -> dealWithTargetBranch (defaultServer cfg) cfg (T.pack arg)
-                Just mrurl -> dealWithMergeRequestURL mrurl cfg
-        else error "Missing configuration file, please follow the configuration instructions."
+    when (null args) $
+        error "You should give a merge request or a branch name."
+
+    -- retrieve configuration
+    isConfigExisting <- doesFileExist configFilepath
+    unless isConfigExisting $
+        error "Missing configuration file, follow the instructions in the README."
+    cfg <- readConfigFile configFilepath
+
+    -- parsing
+    let arg = head args -- keep only the first argument, ignoring the others
+    case parseMergeRequest arg of
+        Nothing    -> dealWithTargetBranch (defaultServer cfg) cfg (T.pack arg)
+        Just mrurl -> dealWithMergeRequestURL mrurl cfg
 
 dealWithMergeRequestURL :: MergeRequestURL -> Configuration -> IO ()
 dealWithMergeRequestURL mrurl cfg = do
-    -- retrieve server configuration from merge request
     let server = serverFromMergeRequest mrurl cfg
-    -- retrieve actual merge request information GitLab API
-    mr <- runGitLab server (mergeRequestFromURL mrurl)
-    case mr of
-        Nothing -> putStrLn "Could not fetch merge request."
-        Just mr -> dealWithTargetBranch server cfg (merge_request_target_branch mr)
+    maybeMr <- runGitLab server (mergeRequestFromURL mrurl)
+    case maybeMr of
+        Nothing -> putStrLn $
+            "Could not fetch merge request: " ++ _mergeRequestBaseURL mrurl
+        Just mr  -> dealWithTargetBranch server cfg (merge_request_target_branch mr)
 
 dealWithTargetBranch :: GitLabServerConfig -> Configuration -> Text -> IO ()
 dealWithTargetBranch server cfg targetBranch = do
-    -- retrieve configuration preferences for number of commits
-    let nbCommits = nbCommitsFromConfig cfg
-    -- retrieve configured projects
     doesListingExist <- doesFileExist submodulesFilepath
-    if doesListingExist then do
-        ps <- readProjectConfigFile submodulesFilepath
-        -- time to retrieve commits for all projects on the target branch
-        T.IO.putStrLn $ "Target branch is: " <> targetBranch <> "\n"
-        -- print last commits on the configured projects
-        mapM_ (lastCommits server targetBranch nbCommits) ps
-    else error "Missing submodules listing, please follow the configuration instructions."
+    unless doesListingExist $
+        error "Missing submodules listing, follow the instructions in the README."
+    projectConfig <- readProjectConfigFile submodulesFilepath
+    T.IO.putStrLn $ "Target branch is: " <> targetBranch <> "\n"
+    mapM_ (lastCommits server targetBranch (nbCommitsFromConfig cfg)) projectConfig
 
 -- | From a server config, a target branch and a project, print its last X commits
 lastCommits :: GitLabServerConfig -> Text -> Int -> (ProjectName, ProjectID) -> IO ()
 lastCommits server target nbCommits (pname, pid) = do
-    cs <- runGitLab server (branchCommits' pid target)
-    let commits = fromRight (error "Could not retrieve commits.") cs
+    ecs <- runGitLab server (branchCommits' pid target)
+    let commits = fromRight (error "Could not retrieve commits.") ecs
     case take nbCommits commits of
         [] ->
             T.IO.putStrLn $ "No branch " <> target <> " on " <> pname <> ".\n"

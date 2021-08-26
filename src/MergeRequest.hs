@@ -9,9 +9,9 @@ import Text.Regex.PCRE ((=~))
 
 -- | Extracted data from a merge request URI
 data MergeRequestURL = MergeRequestURL {
-    mergeRequestId      :: Int,    -- ^ its ID, e.g. 18835
-    mergeRequestBaseURL :: String, -- ^ its base URL, e.g. "https://git.something.com"
-    mergeRequestProject :: String  -- ^ the project name
+    _mergeRequestId      :: Int,    -- ^ its ID, e.g. 18835
+    _mergeRequestBaseURL :: String, -- ^ its base URL, e.g. "https://git.something.com"
+    _mergeRequestProject :: String  -- ^ the project name
 } deriving (Eq)
 
 instance Show MergeRequestURL where
