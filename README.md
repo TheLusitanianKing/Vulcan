@@ -1,59 +1,63 @@
+:england: [English version/Versão inglesa](README-en.md)
+***
+
 # Vulcan ![Unit tests](https://github.com/TheLusitanianKing/Vulcan/workflows/Haskell%20CI/badge.svg)
-Merge requests validation helper.
+Ferramenta de ajuda para validar MR.
 
 <img src="https://static.wikia.nocookie.net/metalgear/images/2/22/Vulcan_Raven.jpg/revision/latest?cb=20060802225437" alt="vulcan-raven" width="150"/>
 
-## Context
-Teams working with Git submodules need to forward them. Usually, when updating a submodule, we will want the main project to update the target commit of this submodule. Therefore, we often need to check manually if the targeted commit is the right one.
+## Contexto
+Equipas a trabalhar com submodules Git precisam atualizá-los. Na maioria dos casos, queremos que o projeto principal esteja sincronizado com as nossas mudanças nos submodules. Portanto, precisamos verificar manualmente se o commit alvo da MR é o commit certo.
 
-## Features
-From a merge request URL, it will:
-- Retrieve the target branch and then list the last X commits (hash, name, author) of all configured submodules on that branch.
+## Funcionalidades
+A partir da URL de uma merge request, vai:
+- Recuperar o ramo alvo da MR e listar os últimos X commits de todos os submodules com o mesmo ramo (se existir um ramo com o mesmo nome no submodule).
 
-If you pass it a branch name, it will:
-- List the last X commits (hash, name, author) of all configured submodules of that branch (if it exists).
+Ou, diretamente a partir de um nome de ramo, vai:
+- Listar os últimos X commits de todos os submodules com o mesmo ramo (se existir um ramo com o mesmo nome no submodule).
 
-## Configuration
-There are 2 configuration files, one for Vulcan's main configuration and preferences and another one for listing the submodules.
+## Configurações
+Tem dois ficheiros de configuração, um para as configurações gerais da app e outro para listar os submodules.
 
-### Main configuration
-This configuration file is mainly about how to access your VCS from the script (default URL, your token and some other preferences).
+### Configuração geral
+Este ficheiro de configuração é principalmente para saber como aceder o vosso *sistema de controlo de versões* (URL, token e outras configurações do género).
+
 ```bash
 cp conf/vulcan.conf.default conf/vulcan.conf
-vim conf/vulcan.conf # edit the file with your configuration
+vim conf/vulcan.conf # modificam este ficheiro com a vossa configuração
 ```
 
-### Listing submodules
-This configuration is about listing all the submodules you are using and their ID (you can usually find their ID in their main page).
-As there is no simple way to retrieve this list for now, and since Vulcan needs it, you have to write them all.
+### Listar os submodules
+Este ficheiro é simplesmente para listar todos os submodules usados e os seus IDs (podem encontrar esses IDs na página principal dos submodules em princípio).
+
+Como não tem forma simples de recuperar esta lista por enquanto, e como Vulcan precisa disso, tendes que os listar todos.
+
 ```bash
 cp conf/submodules.conf.default conf/submodules.conf
-vim conf/submodules.conf # edit the file with your submodules
+vim conf/submodules.conf # modificam este ficheiro com os vossos submodules
 ```
 
-## Usage
-Just pass it a merge request URL
+## Uso
+É só dar-lhe uma URL de MR:
 
 ```bash
 cabal run :vulcan https://git.something.com/namespace/project/merge_requests/199
 ```
 
-OR directly a branch name
+OU diretamente um nome de ramo:
 
 ```bash
 cabal run :vulcan us_283532_statistics
 ```
 
-You can build it first, to run it faster as it won't have to build it before running with: `cabal build`.
+## Lista de possíveis melhorias
+Ver [aqui todos com a etiqueta "enhancement"](https://github.com/TheLusitanianKing/Vulcan/labels/enhancement).
 
-## Future features / TO DO list
-See [Issues tagged with enhancement](https://github.com/TheLusitanianKing/Vulcan/labels/enhancement).
-
-## Supports
-- :white_check_mark: GitLab (using `gitlab-haskell` library)
+## Suporte
+- :white_check_mark: GitLab
 - :x: GitHub
 - :x: BitBucket
 - ...
 
-## License
-see [LICENSE](LICENSE) file.
+## Licença
+ver [LICENSE](LICENSE).
